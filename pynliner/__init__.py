@@ -141,8 +141,8 @@ class Pynliner(object):
                 url = self.root_url + url
             else:
                 url = self.relative_url + url
-            self.style_string += self._get_url(url)
-            tag.extract()
+            self.style_string += self._get_url(url).strip()
+            tag.drop_tree()
 
     def _get_internal_styles(self):
         """Gets <style> element styles
@@ -155,7 +155,7 @@ class Pynliner(object):
         sel = lxml.cssselect.CSSSelector('style')
         style_tags = sel(self.soup)
         for tag in style_tags:
-            self.style_string += tag.text
+            self.style_string += tag.text.strip()
             tag.drop_tree()
 
     def _get_specificity_from_list(self, lst):
